@@ -21,7 +21,7 @@ depends_on: Union[str, Sequence[str], None] = None
 
 def upgrade() -> None:
     op.create_table(
-        "fastapi_clean_architecture_ddd_template_users",
+        "fastapi_nested_jwt_authentication_users",
         sa.Column(
             "first_name",
             sa.String(length=100),
@@ -99,7 +99,7 @@ def upgrade() -> None:
         sa.UniqueConstraint("email", "is_active", name="uq_users_email_is_active"),
     )
     op.create_table(
-        "fastapi_clean_architecture_ddd_template_sessions",
+        "fastapi_nested_jwt_authentication_sessions",
         sa.Column(
             "id",
             sa.UUID(),
@@ -183,7 +183,7 @@ def upgrade() -> None:
         ),
         sa.ForeignKeyConstraint(
             ["user_id"],
-            ["fastapi_clean_architecture_ddd_template_users.id"],
+            ["fastapi_nested_jwt_authentication_users.id"],
             ondelete="CASCADE",
         ),
         sa.PrimaryKeyConstraint("id"),
@@ -196,12 +196,12 @@ def upgrade() -> None:
     )
     op.create_index(
         "ix_sessions_user_id_user_agent_device",
-        "fastapi_clean_architecture_ddd_template_sessions",
+        "fastapi_nested_jwt_authentication_sessions",
         ["user_id", "user_agent", "device"],
         unique=False,
     )
     op.create_table(
-        "fastapi_clean_architecture_ddd_template_refresh_tokens",
+        "fastapi_nested_jwt_authentication_refresh_tokens",
         sa.Column(
             "id",
             sa.UUID(),
@@ -258,14 +258,14 @@ def upgrade() -> None:
         ),
         sa.ForeignKeyConstraint(
             ["session_id"],
-            ["fastapi_clean_architecture_ddd_template_sessions.id"],
+            ["fastapi_nested_jwt_authentication_sessions.id"],
             ondelete="CASCADE",
         ),
         sa.PrimaryKeyConstraint("id"),
         sa.UniqueConstraint("session_id", name="uq_refresh_tokens_session_id"),
     )
     op.create_table(
-        "fastapi_clean_architecture_ddd_template_access_tokens",
+        "fastapi_nested_jwt_authentication_access_tokens",
         sa.Column(
             "id",
             sa.UUID(),
@@ -321,7 +321,7 @@ def upgrade() -> None:
         ),
         sa.ForeignKeyConstraint(
             ["refresh_id"],
-            ["fastapi_clean_architecture_ddd_template_refresh_tokens.id"],
+            ["fastapi_nested_jwt_authentication_refresh_tokens.id"],
             ondelete="CASCADE",
         ),
         sa.PrimaryKeyConstraint("id"),
@@ -331,7 +331,7 @@ def upgrade() -> None:
     )
     op.create_index(
         "ix_hashed_jti",
-        "fastapi_clean_architecture_ddd_template_access_tokens",
+        "fastapi_nested_jwt_authentication_access_tokens",
         ["hashed_jti"],
         unique=False,
     )
@@ -340,13 +340,13 @@ def upgrade() -> None:
 def downgrade() -> None:
     op.drop_index(
         "ix_hashed_jti",
-        table_name="fastapi_clean_architecture_ddd_template_access_tokens",
+        table_name="fastapi_nested_jwt_authentication_access_tokens",
     )
-    op.drop_table("fastapi_clean_architecture_ddd_template_access_tokens")
-    op.drop_table("fastapi_clean_architecture_ddd_template_refresh_tokens")
+    op.drop_table("fastapi_nested_jwt_authentication_access_tokens")
+    op.drop_table("fastapi_nested_jwt_authentication_refresh_tokens")
     op.drop_index(
         "ix_sessions_user_id_user_agent_device",
-        table_name="fastapi_clean_architecture_ddd_template_sessions",
+        table_name="fastapi_nested_jwt_authentication_sessions",
     )
-    op.drop_table("fastapi_clean_architecture_ddd_template_sessions")
-    op.drop_table("fastapi_clean_architecture_ddd_template_users")
+    op.drop_table("fastapi_nested_jwt_authentication_sessions")
+    op.drop_table("fastapi_nested_jwt_authentication_users")

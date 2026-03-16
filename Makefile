@@ -9,7 +9,7 @@ view-processes:
 
 delete:
 	sudo docker compose down -v --remove-orphans
-	sudo docker rm -f fastapi-clean-architecture-ddd-template-api fastapi-clean-architecture-ddd-template-database fastapi-clean-architecture-ddd-template-database-admin
+	sudo docker rm -f fastapi-nested-jwt-authetication-api fastapi-nested-jwt-authetication-database fastapi-nested-jwt-authetication-database-admin
 
 dependencies-up:
 	sudo docker compose -f docker-compose.yaml up --build --force-recreate --remove-orphans database database-admin

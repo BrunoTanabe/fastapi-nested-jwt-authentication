@@ -1,18 +1,18 @@
-name: "fastapi-clean-architecture-ddd-template"
+name: "fastapi-nested-jwt-authentication"
 
 services:
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: fastapi-clean-architecture-ddd-template-api
+    container_name: fastapi-nested-jwt-authentication-api
     depends_on:
       database:
         condition: service_healthy
     expose:
       - "${APPLICATION_PORT}"
     networks:
-      - fastapi-clean-architecture-ddd-template-network
+      - fastapi-nested-jwt-authentication-network
     ports:
       - "${APPLICATION_PORT}:3000"
     restart: unless-stopped
@@ -20,7 +20,7 @@ services:
       - ./:/app
 
   database:
-    container_name: fastapi-clean-architecture-ddd-template-database
+    container_name: fastapi-nested-jwt-authentication-database
     environment:
       - "POSTGRES_DB=${POSTGRESQL_DATABASE}"
       - "POSTGRES_USER=${POSTGRESQL_USERNAME}"
@@ -35,7 +35,7 @@ services:
       start_period: 5s
     image: "postgres:17.4-bullseye"
     networks:
-      - fastapi-clean-architecture-ddd-template-network
+      - fastapi-nested-jwt-authentication-network
     ports:
       - "${POSTGRESQL_PORT}:5432"
     restart: unless-stopped
@@ -54,7 +54,7 @@ services:
     expose:
       - "${PGADMIN_PORT}"
     networks:
-      - fastapi-clean-architecture-ddd-template-network
+      - fastapi-nested-jwt-authentication-network
     ports:
       - "${PGADMIN_PORT}:80"
     restart: unless-stopped
@@ -66,5 +66,5 @@ volumes:
   pgadmin_data:
 
 networks:
-  fastapi-clean-architecture-ddd-template-network:
-    name: fastapi-clean-architecture-ddd-template-network
+  fastapi-nested-jwt-authentication-network:
+    name: fastapi-nested-jwt-authentication-network
