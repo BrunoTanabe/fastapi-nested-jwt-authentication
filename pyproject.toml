@@ -1,7 +1,7 @@
 [project]
-name = "fastapi-clean-architecture-ddd-template"
+name = "fastapi-nested-jwt-authentication"
 version = "1.0.0"
-description = "Python FastAPI backend template, organized by Clean Architecture layers (domain, application, infrastructure, presentation) and DDD principles. Includes dependency management, Docker support, testing boilerplate, CI-friendly setup and best practices, modular scaffolding to jump-start new projects and ensure long-term maintainability."
+description = "Complete FastAPI JWT authentication example using Nested JWT (JWS + JWE), rotating access/refresh tokens, token blacklist and revocation on logout, secure HttpOnly cookies, and production-focused security best practices for modern backend authentication."
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
